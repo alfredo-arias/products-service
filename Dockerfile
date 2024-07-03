@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM maven:3.8.7-openjdk-21-slim AS build
+FROM maven:3.8.7-openjdk-24-slim AS build
 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
