@@ -81,6 +81,21 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+
+         <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.actividadgrupal.product_service.ProductServiceApplication</mainClass> <!-- Cambia esto por la clase principal de tu aplicación -->
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+                 
         </plugins>
     </build>
 </project>
