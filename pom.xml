@@ -89,7 +89,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.actividadgrupal.product_service.ProductServiceApplicatio</mainClass> <!-- Cambia esto por la clase principal de tu aplicación -->
+                            <mainClass>com.actividadgrupal.product_service.ProductServiceApplication</mainClass> <!-- Cambia esto por la clase principal de tu aplicación -->
                         </manifest>
                     </archive>
                 </configuration>
