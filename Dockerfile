@@ -1,37 +1,30 @@
-# #
-# # Build stage
-# #
-# FROM openjdk:17-jdk-alpine
+# Etapa de construcción
+FROM maven:3.8.7-openjdk-21-slim AS build
 
-# # Establecer el directorio de trabajo dentro del contenedor
-# WORKDIR /app
+# Establecer el directorio de trabajo dentro del contenedor
+WORKDIR /app
 
-# # Copiar el archivo JAR de la aplicación al contenedor
-# COPY /target/products-service-1.0-SNAPSHOT.jar app.jar
+# Copiar el archivo pom.xml y descargar las dependencias de Maven
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# # Exponer el puerto en el que la aplicación escucha
-# EXPOSE 80
+# Copiar todo el código fuente del proyecto al contenedor
+COPY src ./src
 
-# # Comando para ejecutar la aplicación
-# ENTRYPOINT ["java", "-jar", "app.jar"]
+# Construir el proyecto
+RUN mvn clean package -DskipTests
 
-#
-# Build stage
-#
-FROM maven:3.13.0-jdk-11-slim AS build
-# FROM maven:3.8.7-openjdk-21-slim  AS build
-# FROM maven:3.6.3-jdk-11 AS build
+# Etapa de ejecución
+FROM openjdk:21-slim
 
+# Establecer el directorio de trabajo dentro del contenedor
+WORKDIR /app
 
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
+# Copiar el archivo JAR desde la etapa de construcción
+COPY --from=build /app/target/products-service-1.0-SNAPSHOT.jar app.jar
 
-#
-# Package stage
-#
-FROM openjdk:11-jre-slim
-COPY --from=build /home/app/target/products-service-1.0-SNAPSHOT.jar /usr/local/lib/app.jar
-
+# Exponer el puerto en el que la aplicación escucha
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/app.jar"]
+
+# Comando para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "app.jar"]
