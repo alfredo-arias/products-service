@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # Copiar el archivo JAR de la aplicación al contenedor
-COPY target/products-service-1.0-SNAPSHOT.jar
+COPY /target/products-service-1.0-SNAPSHOT.jar app.jar
 
 # Exponer el puerto en el que la aplicación escucha
 EXPOSE 80
