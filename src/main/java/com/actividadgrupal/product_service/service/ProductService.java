@@ -48,7 +48,7 @@ public class ProductService {
 
         StockResponse stockResponse = webClientBuilder.build()
                 .post()
-                .uri("http://stocks-service.railway.internal/api/stocks")
+                .uri("https://stocks-service-production.up.railway.app/api/stocks")
                 .body(Mono.just(stockRequest), StockRequest.class)
                 .retrieve()
                 .bodyToMono(StockResponse.class)
